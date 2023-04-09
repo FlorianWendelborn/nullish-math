@@ -1,0 +1,29 @@
+name: Publish Package to NPM
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: yarn install --frozen-lockfile
+
+      # make sure this publish doesn’t break anything
+      - run: yarn run vitest --run
+
+      - run: yarn run build
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

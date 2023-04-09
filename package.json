@@ -1,0 +1,24 @@
+{
+	"author": "Florian Wendelborn <1133858+FlorianWendelborn@users.noreply.github.com>",
+	"devDependencies": {
+		"prettier": "^2.8.7",
+		"typescript": "^5.0.4",
+		"vitest": "^0.30.0"
+	},
+	"files": [
+		"dist",
+		"license.md",
+		"readme.md"
+	],
+	"license": "MIT",
+	"main": "dist/index.js",
+	"name": "nullsafe-math",
+	"repository": "git@github.com:FlorianWendelborn/nullsafe-math.git",
+	"sideEffects": false,
+	"scripts": {
+		"build": "yarn run clean && tsc -p tsconfig.build.json",
+		"clean": "rm -rf dist"
+	},
+	"types": "dist/index.d.ts",
+	"version": "0.0.1"
+}
