@@ -12,12 +12,13 @@
 	],
 	"license": "MIT",
 	"main": "dist/index.js",
-	"name": "nullsafe-math",
-	"repository": "git@github.com:FlorianWendelborn/nullsafe-math.git",
+	"name": "nullish-math",
+	"repository": "git@github.com:FlorianWendelborn/nullish-math.git",
 	"sideEffects": false,
 	"scripts": {
 		"build": "yarn run clean && tsc -p tsconfig.build.json",
-		"clean": "rm -rf dist"
+		"clean": "rm -rf dist",
+		"test": "vitest"
 	},
 	"types": "dist/index.d.ts",
 	"version": "0.0.1"
