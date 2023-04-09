@@ -1,6 +1,6 @@
 export type NullishNumber = number | NullishMath | null | undefined
 
-type NotOnlyNullish<T extends NullishNumber> = T extends [null]
+type NotOnlyNullish<T extends NullishNumber> = [T] extends [null]
 	? 'Number cannot always be null'
 	: [T] extends [undefined]
 	? 'Number cannot always be undefined'

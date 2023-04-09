@@ -27,6 +27,14 @@ describe('nm.add()', () => {
 	it('supports a single number parameter', () => {
 		expect(nm(42).add(21).end()).toBe(63)
 	})
+
+	it('supports a single mixed parameter', () => {
+		expect(
+			nm(42)
+				.add(21 as number | null)
+				.end(),
+		).toBe(63)
+	})
 })
 
 describe('nm.addMany()', () => {
@@ -77,6 +85,14 @@ describe('nm.subtract()', () => {
 
 	it('supports a single number parameter', () => {
 		expect(nm(42).subtract(21).end()).toBe(21)
+	})
+
+	it('supports a single mixed parameter', () => {
+		expect(
+			nm(42)
+				.subtract(21 as number | null)
+				.end(),
+		).toBe(21)
 	})
 })
 
@@ -129,6 +145,14 @@ describe('nm.multiply()', () => {
 	it('supports a single number parameter', () => {
 		expect(nm(42).multiply(21).end()).toBe(882)
 	})
+
+	it('supports a single mixed parameter', () => {
+		expect(
+			nm(42)
+				.multiply(21 as number | null)
+				.end(),
+		).toBe(882)
+	})
 })
 
 describe('nm.multiplyMany()', () => {
@@ -179,6 +203,14 @@ describe('nm.divide()', () => {
 
 	it('supports a single number parameter', () => {
 		expect(nm(42).divide(21).end()).toBe(2)
+	})
+
+	it('supports a single mixed parameter', () => {
+		expect(
+			nm(42)
+				.divide(21 as number | null)
+				.end(),
+		).toBe(2)
 	})
 })
 
