@@ -4,6 +4,7 @@ import { nm } from '.'
 
 describe('nm.add()', () => {
 	it('supports null #value', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).add(42).end()).toBe(null)
 
 		// @ts-expect-error not allowed to pass a value that’s always nullish
@@ -40,6 +41,7 @@ describe('nm.add()', () => {
 describe('nm.addMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).addMany().end()).toBe(42)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).addMany().end()).toBe(null)
 	})
 
@@ -66,6 +68,7 @@ describe('nm.addMany()', () => {
 
 describe('nm.subtract()', () => {
 	it('supports null #value', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).subtract(42).end()).toBe(null)
 	})
 
@@ -99,6 +102,7 @@ describe('nm.subtract()', () => {
 describe('nm.subtractMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).subtractMany().end()).toBe(42)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).subtractMany().end()).toBe(null)
 	})
 
@@ -125,6 +129,7 @@ describe('nm.subtractMany()', () => {
 
 describe('nm.multiply()', () => {
 	it('supports null #value', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).multiply(42).end()).toBe(null)
 	})
 
@@ -158,6 +163,7 @@ describe('nm.multiply()', () => {
 describe('nm.multiplyMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).multiplyMany().end()).toBe(42)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).multiplyMany().end()).toBe(null)
 	})
 
@@ -184,6 +190,7 @@ describe('nm.multiplyMany()', () => {
 
 describe('nm.divide()', () => {
 	it('supports null #value', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).divide(42).end()).toBe(null)
 	})
 
@@ -217,6 +224,7 @@ describe('nm.divide()', () => {
 describe('nm.divideMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).divideMany().end()).toBe(42)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).divideMany().end()).toBe(null)
 	})
 
