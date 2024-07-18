@@ -7,8 +7,10 @@
 To install `nullish-math`, use one of the following commands:
 
 ```sh
-yarn add nullish-math
+bun add nullish-math
 npm install nullish-math
+pnpm add nullish-math
+yarn add nullish-math
 ```
 
 ## Usage
@@ -80,3 +82,12 @@ Returns a new instance of `NullishMath` with the quotient of the current value a
 #### `end(): number | null`
 
 Returns the final value of the `NullishMath` instance. If any of the values passed to the math operation methods are `null` or `undefined`, the final value will be `null`.
+
+## Development
+
+`nullish-math` uses [`bun`](https://bun.sh)
+
+```sh
+bun install
+# bun run test
+```
