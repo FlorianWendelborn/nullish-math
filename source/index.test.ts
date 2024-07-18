@@ -1,6 +1,43 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 
-import { nm } from '.'
+import { nm, NullishMath } from '.'
+
+describe('NullishMath static methods', () => {
+	it('correctly implements NullishMath.unwrap()', () => {
+		expect(NullishMath.unwrap(null)).toBe(null)
+		expect(NullishMath.unwrap(undefined)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(NullishMath.unwrap(nm(null))).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(NullishMath.unwrap(nm(undefined))).toBe(null)
+		expect(NullishMath.unwrap(nm(42))).toBe(42)
+		expect(NullishMath.unwrap(42)).toBe(42)
+	})
+
+	it('correctly implements NullishMath.average() without options', () => {
+		expect(NullishMath.average([]).end()).toBe(null)
+		expect(NullishMath.average([null, undefined]).end()).toBe(null)
+		expect(NullishMath.average([null, null]).end()).toBe(null)
+		expect(NullishMath.average([undefined, 42]).end()).toBe(42)
+		expect(NullishMath.average([null, 42]).end()).toBe(42)
+		expect(NullishMath.average([undefined, 42, 1337]).end()).toBe(689.5)
+		expect(NullishMath.average([null, 42, 1337]).end()).toBe(689.5)
+		expect(NullishMath.average([42, 1337]).end()).toBe(689.5)
+	})
+
+	it('correctly implements NullishMath.average() with treatNullAsZero', () => {
+		const o = { treatNullishAsZero: true } as const
+
+		expect(NullishMath.average([], o).end()).toBe(0)
+		expect(NullishMath.average([null, undefined], o).end()).toBe(0)
+		expect(NullishMath.average([null, null], o).end()).toBe(0)
+		expect(NullishMath.average([undefined, 42], o).end()).toBe(21)
+		expect(NullishMath.average([null, 42], o).end()).toBe(21)
+		expect(NullishMath.average([undefined, 10, 20], o).end()).toBe(10)
+		expect(NullishMath.average([null, 10, 20], o).end()).toBe(10)
+		expect(NullishMath.average([42, 1337], o).end()).toBe(689.5)
+	})
+})
 
 describe('nm.add()', () => {
 	it('supports null #value', () => {
@@ -63,6 +100,73 @@ describe('nm.addMany()', () => {
 
 	it('supports multiple number parameters', () => {
 		expect(nm(42).addMany(19, 21, 4096).end()).toBe(4178)
+	})
+})
+
+describe('comparison operators', () => {
+	it('nm.eq()', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).eq(null)).toBe(true)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).eq(undefined)).toBe(true)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).eq(null)).toBe(true)
+
+		expect(nm(1).eq(0)).toBe(false)
+		expect(nm(1).eq(1)).toBe(true)
+		expect(nm(1).eq(2)).toBe(false)
+	})
+
+	it('nm.lt()', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).lt(null)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).lt(undefined)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).lt(null)).toBe(null)
+
+		expect(nm(1).lt(0)).toBe(false)
+		expect(nm(1).lt(1)).toBe(false)
+		expect(nm(1).lt(2)).toBe(true)
+	})
+
+	it('nm.lte()', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).lte(null)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).lte(undefined)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).lte(null)).toBe(null)
+
+		expect(nm(1).lte(0)).toBe(false)
+		expect(nm(1).lte(1)).toBe(true)
+		expect(nm(1).lte(2)).toBe(true)
+	})
+
+	it('nm.gt()', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).gt(null)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).gt(undefined)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).gt(null)).toBe(null)
+
+		expect(nm(1).gt(0)).toBe(true)
+		expect(nm(1).gt(1)).toBe(false)
+		expect(nm(1).gt(2)).toBe(false)
+	})
+
+	it('nm.gte()', () => {
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).gte(null)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(null).gte(undefined)).toBe(null)
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).gte(null)).toBe(null)
+
+		expect(nm(1).gte(0)).toBe(true)
+		expect(nm(1).gte(1)).toBe(true)
+		expect(nm(1).gte(2)).toBe(false)
 	})
 })
 

@@ -7,24 +7,53 @@ export type NullishNumber =
 type NotOnlyNullish<T extends NullishNumber> = [T] extends [null]
 	? 'Number cannot always be null'
 	: [T] extends [undefined]
-	? 'Number cannot always be undefined'
-	: [T] extends [null | undefined]
-	? 'Number cannot always be nullish'
-	: T
+		? 'Number cannot always be undefined'
+		: [T] extends [null | undefined]
+			? 'Number cannot always be nullish'
+			: T
 
 type NotOnlyNullishArray<T extends NullishNumber[]> = [T] extends [null[]]
 	? 'Number cannot always be null'[]
 	: [T] extends [undefined[]]
-	? 'Number cannot always be undefined'[]
-	: [T] extends [Array<null | undefined>]
-	? 'Number cannot always be nullish'[]
-	: T
+		? 'Number cannot always be undefined'[]
+		: [T] extends [Array<null | undefined>]
+			? 'Number cannot always be nullish'[]
+			: T
 
 export class NullishMath<T extends NullishNumber> {
 	readonly #value: number | null
 
 	constructor(value: NotOnlyNullish<T>) {
 		this.#value = NullishMath.unwrap(value as NullishNumber)
+	}
+
+	static average = (
+		numbers: NullishNumber[],
+		options: {
+			treatNullishAsZero?: boolean
+		} = {
+			treatNullishAsZero: false,
+		},
+	): NullishMath<NullishNumber> => {
+		let countValid = 0
+		let sumValid = 0
+
+		for (const rawNumber of numbers) {
+			const number = NullishMath.unwrap(rawNumber)
+
+			if (number === null) {
+				if (options.treatNullishAsZero) countValid += 1
+				continue
+			}
+
+			countValid += 1
+			sumValid += number
+		}
+
+		// division by zero
+		if (countValid === 0) return nm(options.treatNullishAsZero ? 0 : null)
+
+		return nm(sumValid).divide(countValid)
 	}
 
 	static unwrap(value: NullishNumber) {
@@ -59,6 +88,62 @@ export class NullishMath<T extends NullishNumber> {
 		}
 
 		return new NullishMath(result)
+	}
+
+	/**
+	 * Returns true if the two numbers are equal, including the case where both are null.
+	 */
+	eq(toCompare: NullishNumber): boolean {
+		const n = NullishMath.unwrap(toCompare)
+		return this.#value === n
+	}
+
+	/**
+	 * Returns true if toCompare is strictly greater than the current number. Returns null if either number is null
+	 */
+	gt(toCompare: NullishNumber): boolean | null {
+		const n = NullishMath.unwrap(toCompare)
+		if (n === null) return null
+		if (this.#value === null) return null
+		return this.#value > n
+	}
+
+	/**
+	 * Returns true if toCompare is greater than or equal to the current number. Returns null if either number is null
+	 */
+	gte(toCompare: NullishNumber): boolean | null {
+		const n = NullishMath.unwrap(toCompare)
+		if (n === null) return null
+		if (this.#value === null) return null
+		return this.#value >= n
+	}
+
+	/**
+	 * Returns true if toCompare is strictly less than the current number. Returns null if either number is null
+	 */
+	lt(toCompare: NullishNumber): boolean | null {
+		const n = NullishMath.unwrap(toCompare)
+		if (n === null) return null
+		if (this.#value === null) return null
+		return this.#value < n
+	}
+
+	/**
+	 * Returns true if toCompare is less than or equal to the current number. Returns null if either number is null
+	 */
+	lte(toCompare: NullishNumber): boolean | null {
+		const n = NullishMath.unwrap(toCompare)
+		if (n === null) return null
+		if (this.#value === null) return null
+		return this.#value <= n
+	}
+
+	/**
+	 * Returns true if the two numbers are not equal, also returns false when both numbers are null
+	 */
+	neq(toCompare: NullishNumber): boolean {
+		const n = NullishMath.unwrap(toCompare)
+		return this.#value !== n
 	}
 
 	subtract<T extends NullishNumber>(
