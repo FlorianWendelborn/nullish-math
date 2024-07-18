@@ -11,24 +11,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4 # npm is required for provenance support
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install --frozen-lockfile
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - run: yarn install --frozen-lockfile
-
-      # update npm for provenance support
-      - run: npm --version && npm install -g npm && npm --version
-
-      - name: vitest
-        run: yarn run vitest --run
+      - name: test
+        run: bun test
 
       - name: build
-        run: yarn run build
+        run: bun run build
 
       - name: dry-publish
         run: npm publish --provenance --dry-run

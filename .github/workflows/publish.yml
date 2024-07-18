@@ -12,23 +12,15 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - run: yarn install --frozen-lockfile
-
-      # update npm for provenance support
-      - run: npm --version && npm install -g npm && npm --version
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4 # npm is required for provenance support
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install --frozen-lockfile
 
       # make sure this publish doesn’t break anything
-      - run: yarn run vitest --run
+      - run: bun run test
 
-      - run: yarn run build
+      - run: bun run build
 
       - run: npm publish --provenance
         env:

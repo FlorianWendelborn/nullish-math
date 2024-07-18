@@ -1,9 +1,9 @@
 {
 	"author": "Florian Wendelborn <1133858+FlorianWendelborn@users.noreply.github.com>",
 	"devDependencies": {
-		"prettier": "^2.8.7",
-		"typescript": "^5.0.4",
-		"vitest": "^0.30.0"
+		"@types/bun": "^1.1.6",
+		"prettier": "^3.3.3",
+		"typescript": "^5.5.3"
 	},
 	"files": [
 		"dist",
@@ -29,9 +29,9 @@
 	"repository": "git@github.com:FlorianWendelborn/nullish-math.git",
 	"sideEffects": false,
 	"scripts": {
-		"build": "yarn run clean && tsc -p tsconfig.build.json",
+		"build": "bun run clean && tsc -p tsconfig.build.json",
 		"clean": "rm -rf dist",
-		"test": "vitest"
+		"test": "bun test"
 	},
 	"types": "dist/index.d.ts",
 	"version": "0.0.6"
