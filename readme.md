@@ -55,6 +55,30 @@ Returns a new instance of `NullishMath` with the sum of the current value and th
 
 Returns a new instance of `NullishMath` with the sum of the current value and the given numbers.
 
+#### `eq(toCompare: NullishMath | number | null | undefined): boolean`
+
+Returns `true` if the result equals `toCompare`, treats null and undefined as equals.
+
+#### `lt(toCompare: NullishMath | number | null | undefined): boolean | null`
+
+Returns `true` if the result is strictly less than `toCompare`, returns `null` if either number is nullish.
+
+#### `lte(toCompare: NullishMath | number | null | undefined): boolean | null`
+
+Returns `true` if the result is less than or equal to `toCompare`, returns `null` if either number is nullish.
+
+#### `gt(toCompare: NullishMath | number | null | undefined): boolean | null`
+
+Returns `true` if the result is strictly greater than `toCompare`, returns `null` if either number is nullish.
+
+#### `gte(toCompare: NullishMath | number | null | undefined): boolean | null`
+
+Returns `true` if the result is greater than or equal to `toCompare`, returns `null` if either number is nullish.
+
+#### `neq(toCompare: NullishMath | number | null | undefined): boolean`
+
+Returns `true` if the result doesn’t equal `toCompare`, treats null and undefined as equals.
+
 #### `subtract(number: NullishMath | number | null | undefined): NullishMath`
 
 Returns a new instance of `NullishMath` with the difference of the current value and the given number.
@@ -82,6 +106,16 @@ Returns a new instance of `NullishMath` with the quotient of the current value a
 #### `end(): number | null`
 
 Returns the final value of the `NullishMath` instance. If any of the values passed to the math operation methods are `null` or `undefined`, the final value will be `null`.
+
+### `NullishMath.average(Array<NullishMath | number | null | undefined>, options?: { treatNullishAsZero?: boolean }): number | null`
+
+Calculates the average of the provided numbers. By default, `null`s are excluded from the average. This can be changed by setting the `treatNullishAsZero` option. With this flag, nullish numbers get counted as a `0` and thus impact the average.
+
+Returns `null` on division by zero unless `treatNullishAsZero` is set (in which case it returns `0`).
+
+### `NullishMath.unwrap(NullishMath | number | null | undefined): number | null`
+
+Converts the input to either `number | null`. General-purpose equivalent of `nm.end()`
 
 ## Development
 
