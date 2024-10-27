@@ -56,6 +56,40 @@ export class NullishMath<T extends NullishNumber> {
 		return nm(sumValid).divide(countValid)
 	}
 
+	static max = (
+		numbers: NullishNumber[],
+	): NullishMath<NullishNumber> => {
+		let max: number | null = null
+
+		for (const rawNumber of numbers) {
+			const number = NullishMath.unwrap(rawNumber)
+
+			if (number === null) continue
+
+			if (max === null || number > max)
+				max = number
+		}
+
+		return nm(max)
+	}
+
+	static min = (
+		numbers: NullishNumber[],
+	): NullishMath<NullishNumber> => {
+		let min: number | null = null
+
+		for (const rawNumber of numbers) {
+			const number = NullishMath.unwrap(rawNumber)
+
+			if (number === null) continue
+
+			if (min === null || number < min)
+				min = number
+		}
+
+		return nm(min)
+	}
+
 	static unwrap(value: NullishNumber) {
 		if (value === null) return null
 		if (value === undefined) return null

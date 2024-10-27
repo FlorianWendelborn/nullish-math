@@ -37,6 +37,28 @@ describe('NullishMath static methods', () => {
 		expect(NullishMath.average([null, 10, 20], o).end()).toBe(10)
 		expect(NullishMath.average([42, 1337], o).end()).toBe(689.5)
 	})
+
+	it('correctly implements NullishMath.max()', () => {
+		expect(NullishMath.max([]).end()).toBe(null)
+		expect(NullishMath.max([null, undefined]).end()).toBe(null)
+		expect(NullishMath.max([null, null]).end()).toBe(null)
+		expect(NullishMath.max([undefined, 42]).end()).toBe(42)
+		expect(NullishMath.max([null, 42]).end()).toBe(42)
+		expect(NullishMath.max([undefined, 42, 1337]).end()).toBe(1337)
+		expect(NullishMath.max([null, 42, 1337]).end()).toBe(1337)
+		expect(NullishMath.max([42, 1337]).end()).toBe(1337)
+	})
+
+	it('correctly implements NullishMath.min()', () => {
+		expect(NullishMath.min([]).end()).toBe(null)
+		expect(NullishMath.min([null, undefined]).end()).toBe(null)
+		expect(NullishMath.min([null, null]).end()).toBe(null)
+		expect(NullishMath.min([undefined, 42]).end()).toBe(42)
+		expect(NullishMath.min([null, 42]).end()).toBe(42)
+		expect(NullishMath.min([undefined, 42, 1337]).end()).toBe(42)
+		expect(NullishMath.min([null, 42, 1337]).end()).toBe(42)
+		expect(NullishMath.min([42, 1337]).end()).toBe(42)
+	})
 })
 
 describe('nm.add()', () => {
@@ -112,6 +134,10 @@ describe('comparison operators', () => {
 		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).eq(null)).toBe(true)
 
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).eq(42)).toBe(false)
+		expect(nm(42).eq(undefined)).toBe(false)
+
 		expect(nm(1).eq(0)).toBe(false)
 		expect(nm(1).eq(1)).toBe(true)
 		expect(nm(1).eq(2)).toBe(false)
@@ -124,6 +150,10 @@ describe('comparison operators', () => {
 		expect(nm(null).lt(undefined)).toBe(null)
 		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lt(null)).toBe(null)
+
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).lt(42)).toBe(null)
+		expect(nm(42).lt(undefined)).toBe(null)
 
 		expect(nm(1).lt(0)).toBe(false)
 		expect(nm(1).lt(1)).toBe(false)
@@ -138,6 +168,10 @@ describe('comparison operators', () => {
 		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lte(null)).toBe(null)
 
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).lte(42)).toBe(null)
+		expect(nm(42).lte(undefined)).toBe(null)
+
 		expect(nm(1).lte(0)).toBe(false)
 		expect(nm(1).lte(1)).toBe(true)
 		expect(nm(1).lte(2)).toBe(true)
@@ -151,6 +185,10 @@ describe('comparison operators', () => {
 		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gt(null)).toBe(null)
 
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).gt(42)).toBe(null)
+		expect(nm(42).gt(undefined)).toBe(null)
+
 		expect(nm(1).gt(0)).toBe(true)
 		expect(nm(1).gt(1)).toBe(false)
 		expect(nm(1).gt(2)).toBe(false)
@@ -163,6 +201,10 @@ describe('comparison operators', () => {
 		expect(nm(null).gte(undefined)).toBe(null)
 		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gte(null)).toBe(null)
+
+		// @ts-expect-error not allowed to pass a value that’s always nullish
+		expect(nm(undefined).gte(42)).toBe(null)
+		expect(nm(42).gte(undefined)).toBe(null)
 
 		expect(nm(1).gte(0)).toBe(true)
 		expect(nm(1).gte(1)).toBe(true)

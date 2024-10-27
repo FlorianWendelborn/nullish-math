@@ -107,9 +107,17 @@ Returns a new instance of `NullishMath` with the quotient of the current value a
 
 Returns the final value of the `NullishMath` instance. If any of the values passed to the math operation methods are `null` or `undefined`, the final value will be `null`.
 
-### `NullishMath.average(Array<NullishMath | number | null | undefined>, options?: { treatNullishAsZero?: boolean }): number | null`
+### `NullishMath.average(Array<NullishMath | number | null | undefined>, options?: { treatNullishAsZero?: boolean }): NullishMath`
 
 Calculates the average of the provided numbers. By default, `null`s are excluded from the average. This can be changed by setting the `treatNullishAsZero` option. With this flag, nullish numbers get counted as a `0` and thus impact the average.
+
+### `NullishMath.max(Array<NullishMath | number | null | undefined>): NullishMath`
+
+Calculates the maximum of the provided numbers. Ignores `null` and `undefined`. Returns `null` if no proper number was provided
+
+### `NullishMath.min(Array<NullishMath | number | null | undefined>): NullishMath`
+
+Calculates the minimum of the provided numbers. Ignores `null` and `undefined`. Returns `null` if no proper number was provided
 
 Returns `null` on division by zero unless `treatNullishAsZero` is set (in which case it returns `0`).
 
