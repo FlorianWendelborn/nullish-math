@@ -1,30 +1,10 @@
-export type NullishNumber =
-	| number
-	| NullishMath<NullishNumber>
-	| null
-	| undefined
+export type NullishNumber = NullishMath | number | null | undefined
 
-type NotOnlyNullish<T extends NullishNumber> = [T] extends [null]
-	? 'Number cannot always be null'
-	: [T] extends [undefined]
-		? 'Number cannot always be undefined'
-		: [T] extends [null | undefined]
-			? 'Number cannot always be nullish'
-			: T
-
-type NotOnlyNullishArray<T extends NullishNumber[]> = [T] extends [null[]]
-	? 'Number cannot always be null'[]
-	: [T] extends [undefined[]]
-		? 'Number cannot always be undefined'[]
-		: [T] extends [Array<null | undefined>]
-			? 'Number cannot always be nullish'[]
-			: T
-
-export class NullishMath<T extends NullishNumber> {
+export class NullishMath {
 	readonly #value: number | null
 
-	constructor(value: NotOnlyNullish<T>) {
-		this.#value = NullishMath.unwrap(value as NullishNumber)
+	constructor(value: NullishNumber) {
+		this.#value = NullishMath.unwrap(value)
 	}
 
 	static average = (
@@ -34,7 +14,7 @@ export class NullishMath<T extends NullishNumber> {
 		} = {
 			treatNullishAsZero: false,
 		},
-	): NullishMath<NullishNumber> => {
+	): NullishMath => {
 		let countValid = 0
 		let sumValid = 0
 
@@ -56,9 +36,7 @@ export class NullishMath<T extends NullishNumber> {
 		return nm(sumValid).divide(countValid)
 	}
 
-	static max = (
-		numbers: NullishNumber[],
-	): NullishMath<NullishNumber> => {
+	static max = (numbers: NullishNumber[]): NullishMath => {
 		let max: number | null = null
 
 		for (const rawNumber of numbers) {
@@ -66,16 +44,13 @@ export class NullishMath<T extends NullishNumber> {
 
 			if (number === null) continue
 
-			if (max === null || number > max)
-				max = number
+			if (max === null || number > max) max = number
 		}
 
 		return nm(max)
 	}
 
-	static min = (
-		numbers: NullishNumber[],
-	): NullishMath<NullishNumber> => {
+	static min = (numbers: NullishNumber[]): NullishMath => {
 		let min: number | null = null
 
 		for (const rawNumber of numbers) {
@@ -83,8 +58,7 @@ export class NullishMath<T extends NullishNumber> {
 
 			if (number === null) continue
 
-			if (min === null || number < min)
-				min = number
+			if (min === null || number < min) min = number
 		}
 
 		return nm(min)
@@ -97,26 +71,23 @@ export class NullishMath<T extends NullishNumber> {
 		return value.end()
 	}
 
-	add<T extends NullishNumber>(
-		number: NotOnlyNullish<T>,
-	): NullishMath<NullishNumber> {
-		const n = NullishMath.unwrap(number as NullishNumber)
+	add(number: NullishNumber): NullishMath {
+		const n = NullishMath.unwrap(number)
 
-		if (this.#value === null || n === null)
-			return new NullishMath(null as NullishNumber)
+		if (this.#value === null || n === null) return new NullishMath(null)
 
 		return new NullishMath(this.#value + n)
 	}
 
-	addMany<T extends Array<NullishNumber>>(...numbers: NotOnlyNullishArray<T>) {
+	addMany(...numbers: NullishNumber[]) {
 		let result = this.#value
 
-		if (result === null) return new NullishMath(null as NullishNumber)
+		if (result === null) return new NullishMath(null)
 
 		for (const _n of numbers) {
-			const n = NullishMath.unwrap(_n as NullishNumber)
+			const n = NullishMath.unwrap(_n)
 
-			if (n === null) return new NullishMath(null as NullishNumber)
+			if (n === null) return new NullishMath(null)
 
 			result = result + n
 		}
@@ -180,28 +151,23 @@ export class NullishMath<T extends NullishNumber> {
 		return this.#value !== n
 	}
 
-	subtract<T extends NullishNumber>(
-		number: NotOnlyNullish<T>,
-	): NullishMath<NullishNumber> {
-		const n = NullishMath.unwrap(number as NullishNumber)
+	subtract(number: NullishNumber): NullishMath {
+		const n = NullishMath.unwrap(number)
 
-		if (this.#value === null || n === null)
-			return new NullishMath(null as NullishNumber)
+		if (this.#value === null || n === null) return new NullishMath(null)
 
 		return new NullishMath(this.#value - n)
 	}
 
-	subtractMany<T extends Array<NullishNumber>>(
-		...numbers: NotOnlyNullishArray<T>
-	) {
+	subtractMany(...numbers: NullishNumber[]) {
 		let result = this.#value
 
-		if (result === null) return new NullishMath(null as NullishNumber)
+		if (result === null) return new NullishMath(null)
 
 		for (const _n of numbers) {
-			const n = NullishMath.unwrap(_n as NullishNumber)
+			const n = NullishMath.unwrap(_n)
 
-			if (n === null) return new NullishMath(null as NullishNumber)
+			if (n === null) return new NullishMath(null)
 
 			result = result - n
 		}
@@ -209,28 +175,23 @@ export class NullishMath<T extends NullishNumber> {
 		return new NullishMath(result)
 	}
 
-	multiply<T extends NullishNumber>(
-		number: NotOnlyNullish<T>,
-	): NullishMath<NullishNumber> {
-		const n = NullishMath.unwrap(number as NullishNumber)
+	multiply(number: NullishNumber): NullishMath {
+		const n = NullishMath.unwrap(number)
 
-		if (this.#value === null || n === null)
-			return new NullishMath(null as NullishNumber)
+		if (this.#value === null || n === null) return new NullishMath(null)
 
 		return new NullishMath(this.#value * n)
 	}
 
-	multiplyMany<T extends Array<NullishNumber>>(
-		...numbers: NotOnlyNullishArray<T>
-	) {
+	multiplyMany(...numbers: NullishNumber[]) {
 		let result = this.#value
 
-		if (result === null) return new NullishMath(null as NullishNumber)
+		if (result === null) return new NullishMath(null)
 
 		for (const _n of numbers) {
-			const n = NullishMath.unwrap(_n as NullishNumber)
+			const n = NullishMath.unwrap(_n)
 
-			if (n === null) return new NullishMath(null as NullishNumber)
+			if (n === null) return new NullishMath(null)
 
 			result = result * n
 		}
@@ -238,28 +199,23 @@ export class NullishMath<T extends NullishNumber> {
 		return new NullishMath(result)
 	}
 
-	divide<T extends NullishNumber>(
-		number: NotOnlyNullish<T>,
-	): NullishMath<NullishNumber> {
-		const n = NullishMath.unwrap(number as NullishNumber)
+	divide(number: NullishNumber): NullishMath {
+		const n = NullishMath.unwrap(number)
 
-		if (this.#value === null || n === null)
-			return new NullishMath(null as NullishNumber)
+		if (this.#value === null || n === null) return new NullishMath(null)
 
 		return new NullishMath(this.#value / n)
 	}
 
-	divideMany<T extends Array<NullishNumber>>(
-		...numbers: NotOnlyNullishArray<T>
-	) {
+	divideMany(...numbers: NullishNumber[]) {
 		let result = this.#value
 
-		if (result === null) return new NullishMath(null as NullishNumber)
+		if (result === null) return new NullishMath(null)
 
 		for (const _n of numbers) {
-			const n = NullishMath.unwrap(_n as NullishNumber)
+			const n = NullishMath.unwrap(_n)
 
-			if (n === null) return new NullishMath(null as NullishNumber)
+			if (n === null) return new NullishMath(null)
 
 			result = result / n
 		}
@@ -272,6 +228,6 @@ export class NullishMath<T extends NullishNumber> {
 	}
 }
 
-export function nm<T extends NullishNumber>(value: NotOnlyNullish<T>) {
+export function nm(value: NullishNumber) {
 	return new NullishMath(value)
 }

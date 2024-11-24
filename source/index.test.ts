@@ -6,9 +6,7 @@ describe('NullishMath static methods', () => {
 	it('correctly implements NullishMath.unwrap()', () => {
 		expect(NullishMath.unwrap(null)).toBe(null)
 		expect(NullishMath.unwrap(undefined)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(NullishMath.unwrap(nm(null))).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(NullishMath.unwrap(nm(undefined))).toBe(null)
 		expect(NullishMath.unwrap(nm(42))).toBe(42)
 		expect(NullishMath.unwrap(42)).toBe(42)
@@ -63,20 +61,15 @@ describe('NullishMath static methods', () => {
 
 describe('nm.add()', () => {
 	it('supports null #value', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).add(42).end()).toBe(null)
-
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		nm(42).add(null).end()
 	})
 
 	it('supports a single null parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).add(null).end()).toBe(null)
 	})
 
 	it('supports a single undefined parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).add(undefined).end()).toBe(null)
 	})
 
@@ -89,28 +82,21 @@ describe('nm.add()', () => {
 	})
 
 	it('supports a single mixed parameter', () => {
-		expect(
-			nm(42)
-				.add(21 as number | null)
-				.end(),
-		).toBe(63)
+		expect(nm(42).add(21).end()).toBe(63)
 	})
 })
 
 describe('nm.addMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).addMany().end()).toBe(42)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).addMany().end()).toBe(null)
 	})
 
 	it('supports multiple null parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).addMany(null, null).end()).toBe(null)
 	})
 
 	it('supports multiple undefined parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).addMany(undefined, undefined).end()).toBe(null)
 	})
 
@@ -127,14 +113,10 @@ describe('nm.addMany()', () => {
 
 describe('comparison operators', () => {
 	it('nm.eq()', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).eq(null)).toBe(true)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).eq(undefined)).toBe(true)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).eq(null)).toBe(true)
 
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).eq(42)).toBe(false)
 		expect(nm(42).eq(undefined)).toBe(false)
 
@@ -144,14 +126,10 @@ describe('comparison operators', () => {
 	})
 
 	it('nm.lt()', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).lt(null)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).lt(undefined)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lt(null)).toBe(null)
 
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lt(42)).toBe(null)
 		expect(nm(42).lt(undefined)).toBe(null)
 
@@ -161,14 +139,10 @@ describe('comparison operators', () => {
 	})
 
 	it('nm.lte()', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).lte(null)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).lte(undefined)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lte(null)).toBe(null)
 
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).lte(42)).toBe(null)
 		expect(nm(42).lte(undefined)).toBe(null)
 
@@ -178,14 +152,10 @@ describe('comparison operators', () => {
 	})
 
 	it('nm.gt()', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).gt(null)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).gt(undefined)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gt(null)).toBe(null)
 
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gt(42)).toBe(null)
 		expect(nm(42).gt(undefined)).toBe(null)
 
@@ -195,14 +165,10 @@ describe('comparison operators', () => {
 	})
 
 	it('nm.gte()', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).gte(null)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).gte(undefined)).toBe(null)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gte(null)).toBe(null)
 
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(undefined).gte(42)).toBe(null)
 		expect(nm(42).gte(undefined)).toBe(null)
 
@@ -214,17 +180,14 @@ describe('comparison operators', () => {
 
 describe('nm.subtract()', () => {
 	it('supports null #value', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).subtract(42).end()).toBe(null)
 	})
 
 	it('supports a single null parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).subtract(null).end()).toBe(null)
 	})
 
 	it('supports a single undefined parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).subtract(undefined).end()).toBe(null)
 	})
 
@@ -237,28 +200,21 @@ describe('nm.subtract()', () => {
 	})
 
 	it('supports a single mixed parameter', () => {
-		expect(
-			nm(42)
-				.subtract(21 as number | null)
-				.end(),
-		).toBe(21)
+		expect(nm(42).subtract(21).end()).toBe(21)
 	})
 })
 
 describe('nm.subtractMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).subtractMany().end()).toBe(42)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).subtractMany().end()).toBe(null)
 	})
 
 	it('supports multiple null parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).subtractMany(null, null).end()).toBe(null)
 	})
 
 	it('supports multiple undefined parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).subtractMany(undefined, undefined).end()).toBe(null)
 	})
 
@@ -275,17 +231,14 @@ describe('nm.subtractMany()', () => {
 
 describe('nm.multiply()', () => {
 	it('supports null #value', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).multiply(42).end()).toBe(null)
 	})
 
 	it('supports a single null parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).multiply(null).end()).toBe(null)
 	})
 
 	it('supports a single undefined parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).multiply(undefined).end()).toBe(null)
 	})
 
@@ -298,28 +251,21 @@ describe('nm.multiply()', () => {
 	})
 
 	it('supports a single mixed parameter', () => {
-		expect(
-			nm(42)
-				.multiply(21 as number | null)
-				.end(),
-		).toBe(882)
+		expect(nm(42).multiply(21).end()).toBe(882)
 	})
 })
 
 describe('nm.multiplyMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).multiplyMany().end()).toBe(42)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).multiplyMany().end()).toBe(null)
 	})
 
 	it('supports multiple null parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).multiplyMany(null, null).end()).toBe(null)
 	})
 
 	it('supports multiple undefined parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).multiplyMany(undefined, undefined).end()).toBe(null)
 	})
 
@@ -336,17 +282,14 @@ describe('nm.multiplyMany()', () => {
 
 describe('nm.divide()', () => {
 	it('supports null #value', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).divide(42).end()).toBe(null)
 	})
 
 	it('supports a single null parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).divide(null).end()).toBe(null)
 	})
 
 	it('supports a single undefined parameter', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).divide(undefined).end()).toBe(null)
 	})
 
@@ -359,28 +302,21 @@ describe('nm.divide()', () => {
 	})
 
 	it('supports a single mixed parameter', () => {
-		expect(
-			nm(42)
-				.divide(21 as number | null)
-				.end(),
-		).toBe(2)
+		expect(nm(42).divide(21).end()).toBe(2)
 	})
 })
 
 describe('nm.divideMany()', () => {
 	it('supports no parameters', () => {
 		expect(nm(42).divideMany().end()).toBe(42)
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(null).divideMany().end()).toBe(null)
 	})
 
 	it('supports multiple null parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).divideMany(null, null).end()).toBe(null)
 	})
 
 	it('supports multiple undefined parameters', () => {
-		// @ts-expect-error not allowed to pass a value that’s always nullish
 		expect(nm(42).divideMany(undefined, undefined).end()).toBe(null)
 	})
 
