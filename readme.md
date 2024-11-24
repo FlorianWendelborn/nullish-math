@@ -119,8 +119,6 @@ Calculates the maximum of the provided numbers. Ignores `null` and `undefined`. 
 
 Calculates the minimum of the provided numbers. Ignores `null` and `undefined`. Returns `null` if no proper number was provided
 
-Returns `null` on division by zero unless `treatNullishAsZero` is set (in which case it returns `0`).
-
 ### `NullishMath.unwrap(NullishMath | number | null | undefined): number | null`
 
 Converts the input to either `number | null`. General-purpose equivalent of `nm.end()`
