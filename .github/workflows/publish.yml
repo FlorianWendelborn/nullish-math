@@ -4,27 +4,34 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write # Required for OIDC (https://docs.npmjs.com/trusted-publishers#github-actions-configuration)
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     permissions:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4 # npm is required for provenance support
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
         with:
-          node-version: '20.x'
+          node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
-      - uses: oven-sh/setup-bun@v1
+
       - run: bun install --frozen-lockfile
+
+      # update npm (presumably for OIDC support)
+      - run: npm --version && npm install -g npm && npm --version
 
       # make sure this publish doesn’t break anything
       - run: bun run test
 
       - run: bun run build
 
-      - run: npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: publish
+        run: npm publish --provenance
