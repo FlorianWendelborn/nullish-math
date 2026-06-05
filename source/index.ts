@@ -231,17 +231,22 @@ export class NullishMath {
 
 	/**
 	 * Returns a new instance of `NullishMath` with the quotient of the current value and the given number.
+	 *
+	 * Treats division by zero as null
 	 */
 	divide(number: NullishNumber): NullishMath {
 		const n = NullishMath.unwrap(number)
 
-		if (this.#value === null || n === null) return new NullishMath(null)
+		if (this.#value === null || n === null || n === 0)
+			return new NullishMath(null)
 
 		return new NullishMath(this.#value / n)
 	}
 
 	/**
 	 * Returns a new instance of `NullishMath` with the quotient of the current value and the given numbers.
+	 *
+	 * Treats division by zero as null
 	 */
 	divideMany(...numbers: NullishNumber[]) {
 		let result = this.#value
@@ -251,7 +256,7 @@ export class NullishMath {
 		for (const _n of numbers) {
 			const n = NullishMath.unwrap(_n)
 
-			if (n === null) return new NullishMath(null)
+			if (n === null || n === 0) return new NullishMath(null)
 
 			result = result / n
 		}

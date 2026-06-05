@@ -97,11 +97,11 @@ Returns a new instance of `NullishMath` with the product of the current value an
 
 #### `divide(number: NullishMath | number | null | undefined): NullishMath`
 
-Returns a new instance of `NullishMath` with the quotient of the current value and the given number.
+Returns a new instance of `NullishMath` with the quotient of the current value and the given number. Treats division by zero as null.
 
 #### `divideMany(...nums: Array<NullishMath | number | null | undefined>): NullishMath`
 
-Returns a new instance of `NullishMath` with the quotient of the current value and the given numbers.
+Returns a new instance of `NullishMath` with the quotient of the current value and the given numbers. Treats division by zero as null.
 
 #### `end(): number | null`
 

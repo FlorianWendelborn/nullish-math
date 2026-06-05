@@ -304,6 +304,10 @@ describe('nm.divide()', () => {
 	it('supports a single mixed parameter', () => {
 		expect(nm(42).divide(21).end()).toBe(2)
 	})
+
+	it('treats division by zero as null', () => {
+		expect(nm(42).divide(0).end()).toBe(null)
+	})
 })
 
 describe('nm.divideMany()', () => {
@@ -328,5 +332,11 @@ describe('nm.divideMany()', () => {
 
 	it('supports multiple number parameters', () => {
 		expect(nm(42).divideMany(3, 7, -2).end()).toBe(-1)
+	})
+
+	it('treats division by zero as null', () => {
+		expect(nm(42).divideMany(4, 3, 2, 1, 0).end()).toBe(null)
+		expect(nm(42).divideMany(1, 0).end()).toBe(null)
+		expect(nm(42).divideMany(0).end()).toBe(null)
 	})
 })
